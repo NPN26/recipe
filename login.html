@@ -37,8 +37,10 @@
           },
           success: function (response) {
             console.log("Server response: ", response);
-            if (response === "success") {
-              window.location.href = "./test.html";
+            const jsonResponse = JSON.parse(response);
+            if (jsonResponse.status === "success") {
+              localStorage.setItem('userId', jsonResponse.user_id);
+              window.location.href = "./header.html";
             } else {
               alert($('#error-message').show());
             }

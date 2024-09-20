@@ -16,11 +16,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $result = $connection->query($sql);
     if(mysqli_num_rows($result) > 0) {
-        echo 'success';
+        $row = $result->fetch_assoc();
+        echo json_encode([
+            'status' => 'success',
+            'user_id' => $row['user_id']
+        ]);
     } else {
-        echo "Login failed";
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Login failed'
+        ]);
     }
-
+    
     mysqli_close($connection);
 }  
 ?>
