@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recipe Submission</title>
+    <link rel="stylesheet" href="" />
+  </head>
+  <body>
+    <div class="container">
+        <div class="login-box">
+            <h1>Submit a Recipe</h1>
+            <form action="" method="POST">
+                <label class="add-text" for="recipe-name">Recipe Name:</label><br>
+                <input type="text" placeholder="Recipe Name" name="recipe-name" required /><br>
+                
+                <label class="add-text" for="recipe-description">Recipe Description:</label><br>
+                <input type="text" placeholder="Recipe Description" name="recipe-description" required /><br>
+                
+                <label class="add-text" for="recipe-category">Recipe Category:</label><br>
+                <input type="text" placeholder="Recipe Category" name="recipe-category" required /><br>
+                
+                <label class="add-text" for="prep-time">Preperation time:</label><br>
+                <input type="text" placeholder="Preperation time" name="prep-time" required /><br>
+                
+                <label class="add-text" for="cook-time">Cooking time:</label><br>
+                <input type="text" placeholder="Cooking time" name="cook-time" required /><br>
+                
+                <label class="add-text" for="recipe-servings">Recipe Servings:</label><br>
+                <input type="text" placeholder="Recipe Servings" name="recipe-servings" required /><br>
+                
+                <label class="add-text">Recipe Ingredients:</label><br>
+                
+                <div id="ingredients-container">
+                    <div class="textbox">
+                        <input type="text" placeholder="Ingredient 1" name="recipe-ingredients" required /><br>
+                    </div>
+                </div>
+                
+                <button type="button" class="btn" onclick="addIngredient()">Add Ingredient</button><br>
+                
+                <label class="add-text">Recipe Instructions:</label><br>
+                
+                <div id="instructions-container">
+                    <div class="textbox">
+                        <input type="text" placeholder="Step 1" name="recipe-instructions" required /><br>
+                    </div>
+                </div>
+                
+                <button type="button" class="btn" onclick="addInstruction()">Add Instruction</button><br>
+
+                <label class="add-text">Recipe image: </label><br>
+                <input type="file" placeholder="Recipe image" name="recipe-image" required /><br>
+                
+                <button type="submit" class="btn">Submit</button>
+            </form>
+        </div>
+    </div>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    function addIngredient() {
+        const ingredientsContainer = document.getElementById("ingredients-container");
+        const newIngredient = document.createElement("div");
+        newIngredient.classList.add("textbox");
+        newIngredient.innerHTML = `<input type="text" placeholder="Ingredient ${ingredientsContainer.children.length + 1}" name="recipe-ingredients" required /><br>`;
+        ingredientsContainer.appendChild(newIngredient);
+    }
+
+    function addInstruction() {
+        const instructionsContainer = document.getElementById("instructions-container");
+        const newInstruction = document.createElement("div");
+        newInstruction.classList.add("textbox");
+        newInstruction.innerHTML = `<input type="text" placeholder="Step ${instructionsContainer.children.length + 1}" name="recipe-instructions" required /><br>`;
+        instructionsContainer.appendChild(newInstruction);
+    }
+  </script>
+  <script>
+    $(function () {
+      $("form").submit(function (e) {
+        e.preventDefault();
+        const recipeName = $("input[name='recipe-name']").val();
+        const recipeDescription = $("input[name='recipe-description']").val();
+        const recipeCategory = $("input[name='recipe-category']").val();
+        const prepTime = $("input[name='prep-time']").val();
+        const cookTime = $("input[name='cook-time']").val();
+        const recipeServings = $("input[name='recipe-servings']").val();
+        const recipeIngredients = $("input[name='recipe-ingredients']").map(function () {
+            return $(this).val();
+        }).get();
+        const recipeInstructions = $("input[name='recipe-instructions']").map(function () {
+            return $(this).val();
+        }).get();
+        $.ajax({
+          url: "./recipe_submission_process.php",
+          method: "POST",
+          data: {
+            recipeName,
+            recipeDescription,
+            recipeCategory,
+            prepTime,
+            cookTime,
+            recipeServings,
+            recipeIngredients,
+            recipeInstructions,
+          },
+          success: function (response) {
+            console.log("Server response: ", response);
+            if (response === "success") {
+              window.location.href = "./test.html";
+            } else {
+              alert($('#error-message').show());
+            }
+          },
+          error: function () {
+            alert("Recipe submission failed, please try again");
+          },
+        });
+      });
+    });
+  </script>
+</html>

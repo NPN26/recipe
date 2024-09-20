@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+    <link rel="stylesheet" href="" />
+  </head>
+  <body>
+    <div class="container">
+      <img src="./images/Account-icon.png" alt="account icon" />
+      <div class="login-box">
+        <h1>Create an account</h1>
+        <form method="POST">
+          <label class="add-text" for="username">Username:</label><br />
+          <input
+            type="text"
+            placeholder="Username"
+            name="username"
+            id="username"
+            required
+          /><br />
+
+          <label class="add-text" for="email">Email ID:</label><br />
+          <input type="email" id="email" placeholder="Email" name="email" /><br />
+
+          <label class="add-text" for="password">Password:</label><br />
+          <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            name="password"
+            required
+          /><br />
+          
+          <label class="add-text" for="password-reconfirm"
+            >Confirm Password:</label
+          ><br />
+          <input
+            type="password"
+            id="password-reconfirm"
+            placeholder="Password"
+            name="password-reconfirm"
+            required
+          /><br />
+
+          <button type="submit" class="btn">Register</button>
+        </form>
+      </div>
+    </div>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(function () {
+      $("form").submit(function (e) {
+        e.preventDefault();
+        const username = $("#username").val();
+        const email = $("#email").val();
+        const password = $("#password").val();
+        const passwordReconfirm = $("#password-reconfirm").val();
+        if (password !== passwordReconfirm) {
+          alert("Passwords do not match");
+          return;
+        }
+        if (password.length < 8) {
+          alert("Password must be atleast 8 characters long");
+          return;
+        }
+        if (username.length < 4) {
+          alert("Username must be atleast 4 characters long");
+          return;
+        }
+        if (!/[A-Z]/.test(password)){
+          alert("Password must contain atleast one uppercase letter");
+          return;
+        }
+        if (!/[a-z]/.test(password)){
+          alert("Password must contain atleast one lowercase letter");
+          return;
+        }
+        if (!/[0-9]/.test(password)){
+          alert("Password must contain atleast one number");
+          return;
+        }
+        if (!/[!@#$%^&*]/.test(password)){
+          alert("Password must contain atleast one special character");
+          return;
+        }
+        $.ajax({
+          url: "./register.php",
+          type: "POST",
+          data: {
+            username: username,
+            email: email,
+            password: password,
+          },
+          success: function (response) {
+            window.location.href = "./login.html";
+          },
+        });
+      });
+    });
+  </script>
+</html>

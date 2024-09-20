@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="" />
+  </head>
+  <body>
+    <div class="container">
+        <img src="./images/Account-icon.png" alt="account icon">
+        <div class="login-box">
+            <h1>Login</h1>
+            <form method="POST">
+              <input type="text" placeholder="Username" name="username" id="username" required />
+              <input type="password" placeholder="Password" name="password" id="password" required />
+              <button type="submit" class="btn">Login</button>
+            </form>
+            <p> Don't have an account? <a href="./registeration.html">Register here</a></p>
+            <p>Forgot your password? <a href="./">Click here</a></p>
+        </div>
+    </div>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(function () {
+      $("form").submit(function (e) {
+        e.preventDefault();
+        const username = $("#username").val();
+        const password = $("#password").val();
+        $.ajax({
+          url: "./login_process.php",
+          method: "POST",
+          data: {
+            username,
+            password,
+          },
+          success: function (response) {
+            console.log("Server response: ", response);
+            if (response === "success") {
+              window.location.href = "./test.html";
+            } else {
+              alert($('#error-message').show());
+            }
+          },
+          error: function () {
+            alert("Login failed, please try again");
+          },
+        });
+      });
+    });
+  </script>
+</html>
