@@ -35,14 +35,13 @@
                 <input type="text" placeholder="Cooking time" name="cook-time" /><br>
                 
                 <label class="add-text" for="recipe-servings">Recipe Servings:</label><br>
-                <input type="text" placeholder="Recipe Servings" name="recipe-servings" /><br>
+                <input type="number" placeholder="Recipe Servings" name="recipe-servings" /><br>
                 
                 <label class="add-text">Recipe Ingredients:</label><br>
                 
                 <div id="ingredients-container">
                     <div class="textbox" id="Ingredient 1">
                         <input type="text" placeholder="Ingredient 1" name="recipe-ingredients" required />
-                        <input type="number" placeholder="Quantity 1" name="ingredients-quantity" required />
                         <button type="button" class="btn" onclick="deleteIngredient(this)">Delete Ingredient</button><br>
                     </div>
                 </div>
@@ -76,7 +75,6 @@
         newIngredient.classList.add("textbox");
         newIngredient.id = `Ingredient ${ingredientsContainer.children.length + 1}`;
         newIngredient.innerHTML = `<input type="text" placeholder="Ingredient ${ingredientsContainer.children.length + 1}" name="recipe-ingredients" required />
-                                  <input type="number" placeholder="Quantity ${ingredientsContainer.children.length + 1}" name="ingredients-quantity" required />
                         <button type="button" class="btn" onclick="deleteIngredient(this)">Delete Ingredient</button><br>`;
         ingredientsContainer.appendChild(newIngredient);
     }
@@ -128,18 +126,12 @@
         const recipeIngredients = $("input[name='recipe-ingredients']").map(function () {
             return $(this).val();
         }).get();
-        const ingredientsQuantity = $("input[name='ingredients-quantity']").map(function () {
-            return $(this).val();
-        }).get();
         const recipeInstructions = $("input[name='recipe-instructions']").map(function () {
             return $(this).val();
         }).get();
         const recipeImage = $("input[name='recipe-image']").val();
 
-        const ingredients = {};
-        recipeIngredients.forEach((ingredient, index) => {
-            ingredients[ingredient] = ingredientsQuantity[index];
-        });
+        console.log(recipeIngredients)
 
         $.ajax({
           url: "./recipe_submission_process.php",
@@ -148,17 +140,17 @@
             userId,
             recipeName,
             recipeDescription,
-            recipeCategory,
             prepTime,
             cookTime,
             recipeServings,
-            ingredients,
+            recipeIngredients,
             recipeInstructions,
+            recipeImage
           },
           success: function (response) {
-            console.log("Server response: ", ingredients);
-            if (response === "success") {
-              //window.location.href = "./header.html";
+            console.log("Server response: ", response);
+            if (response === "Recipe submitted successfully") {
+              window.location.href = "./header.html";
             } else {
               alert($('#error-message').show());
             }
