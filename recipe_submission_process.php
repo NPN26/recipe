@@ -42,6 +42,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo "Error: " . $sql . "<br>" . $connection->error;
             }
         }
+
+        $sql = "INSERT INTO recipe_images (recipe_id, user_id, image) VALUES ('$recipe_id','$userid', '$recipeImage')";
+        $result = $connection->query($sql);
+        if (!$result) {
+            echo "Error: " . $sql . "<br>" . $connection->error;
+        }
+
         echo "Recipe submitted successfully";
     } else {
         echo "Error: " . $sql . "<br>" . $connection->error;

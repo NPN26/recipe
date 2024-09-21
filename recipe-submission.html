@@ -29,10 +29,20 @@
                 <button type="button" class="btn" onclick="addCategory()">Add Category</button><br>
                 
                 <label class="add-text" for="prep-time">Preperation time:</label><br>
-                <input type="text" placeholder="Preperation time" name="prep-time" /><br>
+                <div id="prep-time">
+                  <label>Hours: </label>
+                  <input type="text" placeholder="Preperation time" name="prep-time-hours" />
+                  <label>Minutes: </label>
+                  <input type="text" placeholder="Preperation time" name="prep-time-minutes" />
+                </div>
                 
                 <label class="add-text" for="cook-time">Cooking time:</label><br>
-                <input type="text" placeholder="Cooking time" name="cook-time" /><br>
+                <div id="cook-time">
+                  <label>Hours: </label>
+                  <input type="text" placeholder="Cooking time" name="cook-time-hours" />
+                  <label>Minutes: </label>
+                  <input type="text" placeholder="Cooking time" name="cook-time-minutes" />
+                </div>
                 
                 <label class="add-text" for="recipe-servings">Recipe Servings:</label><br>
                 <input type="number" placeholder="Recipe Servings" name="recipe-servings" /><br>
@@ -120,8 +130,15 @@
         const recipeCategory = $("input[name='recipe-category']").map(function () {
             return $(this).val();
         }).get();
-        const prepTime = $("input[name='prep-time']").val();
-        const cookTime = $("input[name='cook-time']").val();
+
+        const prepTimeHours = $("input[name='prep-time-hours']").val();
+        const prepTimeMinutes = $("input[name='prep-time-minutes']").val();
+        const prepTime = (parseInt(prepTimeHours) || 0) * 60 + (parseInt(prepTimeMinutes) || 0);
+
+        const cookTimeHours = $("input[name='cook-time-hours']").val();
+        const cookTimeMinutes = $("input[name='cook-time-minutes']").val();
+        const cookTime = (parseInt(cookTimeHours) || 0) * 60 + (parseInt(cookTimeMinutes) || 0);
+
         const recipeServings = $("input[name='recipe-servings']").val();
         const recipeIngredients = $("input[name='recipe-ingredients']").map(function () {
             return $(this).val();
@@ -150,7 +167,7 @@
           success: function (response) {
             console.log("Server response: ", response);
             if (response === "Recipe submitted successfully") {
-              window.location.href = "./header.html";
+              //window.location.href = "./header.html";
             } else {
               alert($('#error-message').show());
             }
