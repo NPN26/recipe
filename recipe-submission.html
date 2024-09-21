@@ -20,8 +20,9 @@
                 <label class="add-text" for="recipe-category">Recipe Category:</label><br>
                 
                 <div id="category-container">
-                  <div class="textbox">
-                    <input type="text" placeholder="Category 1" name="recipe-category" /><br>
+                  <div class="textbox" id="Category 1">
+                    <input type="text" placeholder="Category 1" name="recipe-category" />
+                    <button type="button" class="btn" onclick="deleteCategory(this)">Delete Category</button><br>
                   </div>
                 </div>
 
@@ -39,8 +40,10 @@
                 <label class="add-text">Recipe Ingredients:</label><br>
                 
                 <div id="ingredients-container">
-                    <div class="textbox">
-                        <input type="text" placeholder="Ingredient 1" name="recipe-ingredients" required /><br>
+                    <div class="textbox" id="Ingredient 1">
+                        <input type="text" placeholder="Ingredient 1" name="recipe-ingredients" required />
+                        <input type="number" placeholder="Quantity 1" name="ingredients-quantity" required />
+                        <button type="button" class="btn" onclick="deleteIngredient(this)">Delete Ingredient</button><br>
                     </div>
                 </div>
                 
@@ -49,8 +52,9 @@
                 <label class="add-text">Recipe Instructions:</label><br>
                 
                 <div id="instructions-container">
-                    <div class="textbox">
-                        <input type="text" placeholder="Step 1" name="recipe-instructions" required /><br>
+                    <div class="textbox" id="Step 1">
+                        <input type="text" placeholder="Step 1" name="recipe-instructions" required />
+                        <button type="button" class="btn" onclick="deleteInstruction(this)">Delete Instruction</button><br>
                     </div>
                 </div>
                 
@@ -70,7 +74,10 @@
         const ingredientsContainer = document.getElementById("ingredients-container");
         const newIngredient = document.createElement("div");
         newIngredient.classList.add("textbox");
-        newIngredient.innerHTML = `<input type="text" placeholder="Ingredient ${ingredientsContainer.children.length + 1}" name="recipe-ingredients" required /><br>`;
+        newIngredient.id = `Ingredient ${ingredientsContainer.children.length + 1}`;
+        newIngredient.innerHTML = `<input type="text" placeholder="Ingredient ${ingredientsContainer.children.length + 1}" name="recipe-ingredients" required />
+                                  <input type="number" placeholder="Quantity ${ingredientsContainer.children.length + 1}" name="ingredients-quantity" required />
+                        <button type="button" class="btn" onclick="deleteIngredient(this)">Delete Ingredient</button><br>`;
         ingredientsContainer.appendChild(newIngredient);
     }
 
@@ -78,7 +85,9 @@
         const instructionsContainer = document.getElementById("instructions-container");
         const newInstruction = document.createElement("div");
         newInstruction.classList.add("textbox");
-        newInstruction.innerHTML = `<input type="text" placeholder="Step ${instructionsContainer.children.length + 1}" name="recipe-instructions" required /><br>`;
+        newInstruction.id = `Step ${instructionsContainer.children.length + 1}`;
+        newInstruction.innerHTML = `<input type="text" placeholder="Step ${instructionsContainer.children.length + 1}" name="recipe-instructions" required />
+                        <button type="button" class="btn" onclick="deleteInstruction(this)">Delete Instruction</button><br>`;
         instructionsContainer.appendChild(newInstruction);
     }
 
@@ -86,14 +95,28 @@
         const categoryContainer = document.getElementById("category-container");
         const newCategory = document.createElement("div");
         newCategory.classList.add("textbox");
-        newCategory.innerHTML = `<input type="text" placeholder="Category ${categoryContainer.children.length + 1}" name="recipe-category" required /><br>`;
+        newCategory.id = `Category ${categoryContainer.children.length + 1}`;
+        newCategory.innerHTML = `<input type="text" placeholder="Category ${categoryContainer.children.length + 1}" name="recipe-category" required />
+                    <button type="button" class="btn" onclick="deleteCategory(this)">Delete Category</button><br>`;
         categoryContainer.appendChild(newCategory);
     }
+
+    function deleteIngredient(button) {
+        button.parentElement.remove();
+    }
+    function deleteInstruction(button) {
+        button.parentElement.remove();
+    }
+    function deleteCategory(button) {
+        button.parentElement.remove();
+    }
+
   </script>
   <script>
     $(function () {
       $("form").submit(function (e) {
         e.preventDefault();
+        const userId = localStorage.getItem('userId');
         const recipeName = $("input[name='recipe-name']").val();
         const recipeDescription = $("input[name='recipe-description']").val();
         const recipeCategory = $("input[name='recipe-category']").map(function () {
@@ -105,27 +128,37 @@
         const recipeIngredients = $("input[name='recipe-ingredients']").map(function () {
             return $(this).val();
         }).get();
+        const ingredientsQuantity = $("input[name='ingredients-quantity']").map(function () {
+            return $(this).val();
+        }).get();
         const recipeInstructions = $("input[name='recipe-instructions']").map(function () {
             return $(this).val();
         }).get();
         const recipeImage = $("input[name='recipe-image']").val();
+
+        const ingredients = {};
+        recipeIngredients.forEach((ingredient, index) => {
+            ingredients[ingredient] = ingredientsQuantity[index];
+        });
+
         $.ajax({
           url: "./recipe_submission_process.php",
           method: "POST",
           data: {
+            userId,
             recipeName,
             recipeDescription,
             recipeCategory,
             prepTime,
             cookTime,
             recipeServings,
-            recipeIngredients,
+            ingredients,
             recipeInstructions,
           },
           success: function (response) {
-            console.log("Server response: ", response);
+            console.log("Server response: ", ingredients);
             if (response === "success") {
-              window.location.href = "./header.html";
+              //window.location.href = "./header.html";
             } else {
               alert($('#error-message').show());
             }
