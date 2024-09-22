@@ -49,5 +49,17 @@
             <img id="recipe-image" src="$image" alt="Recipe Image" />
         </div>
     </section>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+           $.ajax({
+                url: "./recipe_page.php",
+                type: "GET",
+                success: function(data) {
+                     console.log(data);
+                }
+           })
+        });
+    </script>
   </body>
 </html> 
