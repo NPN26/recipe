@@ -77,6 +77,10 @@
     </section>
     <section>
         <div id="recipe-details">
+            <div id="description">
+                <h2>Description</h2>
+                <p><?php echo $description; ?></p>
+            </div>
             <div id="ingredients">
                 <h2>Ingredients</h2>
                 <ul>
