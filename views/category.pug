@@ -1,0 +1,59 @@
+doctype html
+head
+  meta(charset='utf-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title #{category}
+  link(rel='stylesheet' href='/css/category.css')
+  link(rel='stylesheet' href='/css/header.css')
+
+header.header
+  a(href='/index.html')
+    img.logo(src='/images/logo.jpeg' alt='Logo')
+  nav.menu
+    a.menu-item(href='/category/BREAKFAST') Breakfast
+    a.menu-item(href='/category/LUNCH') Lunch
+    a.menu-item(href='/category/DINNER') Dinner
+    a.menu-item(href='/category/DESSERT') Dessert
+  a.login-item(href='/login.html') LOGIN
+
+h1#category-name #{category}
+hr
+section#search-bar
+  form(method='GET' action='/searchCategory')
+    input(type='text' name='search' placeholder='Search for recipes')
+    button(type='submit') Search
+section#recipe-list
+  ul.recipe-container
+    li.recipe-card
+      a#recipe1link(href='')
+        img(alt='recipe-image')
+        br
+        p Recipe 1
+    li.recipe-card
+      a#recipe2link(href='')
+        img(alt='recipe-image')
+        br
+        p Recipe 2
+    li.recipe-card
+      a#recipe3link(href='')
+        img(alt='recipe-image')
+        br
+        p Recipe 3
+    li.recipe-card
+      a#recipe4link(href='')
+        img(alt='recipe-image')
+        br
+        p Recipe 4
+    li.recipe-card
+      a#recipe5link(href='')
+        img(alt='recipe-image')
+        br
+        p Recipe 5
+    li.recipe-card
+      a#recipe6link(href='')
+        img(alt='recipe-image')
+        br
+        p Recipe 6
+script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+script(src='/js/categorySearch.js')
+script(src='/js/header.js')

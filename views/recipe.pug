@@ -1,0 +1,75 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    title Recipe
+    link(rel='stylesheet' href='/css/recipe.css')
+    link(rel='stylesheet' href='/css/rating.css')
+    link(rel='stylesheet' href='/css/header.css')
+  body
+    header.header
+      a(href='/index.html')
+        img(src='/images/logo.jpeg' alt='Logo' class='logo')
+      nav.menu
+        a.menu-item(href='/category/BREAKFAST') Breakfast
+        a.menu-item(href='/category/LUNCH') Lunch
+        a.menu-item(href='/category/DINNER') Dinner
+        a.menu-item(href='/category/DESSERT') Dessert
+      a.login-item(href='/login.html')
+        img(src='/images/Account-icon.png' alt='Account Logo' class='account-logo')
+    h1#recipe-name #{name}
+    section#recipe-time-details
+      div.time-container
+        h3
+          | Prep Time
+        p #{prepTime} mins
+      div.vertical
+      div.time-container
+        h3
+          | Cook Time
+        p #{cookTime} mins
+      div.vertical
+      div.time-container
+        h3
+          | Servings
+        p #{servings}
+    section#recipe-display
+      #recipe-details
+        #description
+          h2 Description
+          p #{description}
+        hr
+        #ingredients
+          h2 Ingredients
+          ul
+            each ingredient in ingredients
+              li= ingredient
+        hr
+        #instructions
+          h2 Instructions
+          ol
+            each instruction in instructions
+              li= instruction
+      #image-container.image-container
+        img#recipe-image(src=`/${image}` alt='Recipe Image')
+    section#rating-system
+      h3 Rate this recipe:
+      div#star-rating
+        form(method='POST')
+          input(type='hidden' name='recipe_id' value=recipe_id)
+          fieldset.rating
+            input#star5(type='radio' name='rating' value='5')
+            label(for='star5') 5 stars
+            input#star4(type='radio' name='rating' value='4')
+            label(for='star4') 4 stars
+            input#star3(type='radio' name='rating' value='3')
+            label(for='star3') 3 stars
+            input#star2(type='radio' name='rating' value='2')
+            label(for='star2') 2 stars
+            input#star1(type='radio' name='rating' value='1')
+            label(for='star1') 1 star
+          button(type='submit') Submit
+  script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+  script(src='/js/header.js')
+  script(src='/js/rating.js')
