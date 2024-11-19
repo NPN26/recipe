@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Homepage</title>
+    <link rel="stylesheet" href="./CSS/index.css" />
+    <link rel="stylesheet" href="./CSS/header.css" />
+  </head>
+  <body>
+    <header class="header">
+      <a href="index.html"><img src="./images/logo.jpeg" alt="Logo" class="logo"></a>
+      
+      <nav class="menu">
+          <a href="/category/BREAKFAST" class="menu-item">Breakfast</a>
+          <a href="/category/LUNCH" class="menu-item">Lunch</a>
+          <a href="/category/DINNER" class="menu-item">Dinner</a>
+          <a href="/category/DESSERT" class="menu-item">Dessert</a>
+      </nav>
+    
+      <a href="./login.html" class="login-item">LOGIN</a>
+  </header>
+    <section id="search-bar">
+        <form method="GET">
+            <input type="text" name="search" placeholder="Search for recipes" />
+            <button type="submit">Search</button>
+        </form>
+    </section>
+    <h1 class="recipe-section-h1">RECIPES</h1><hr>
+    <section id="recipe">
+        <ul class="recipe-container">
+            <li id="recipe1" class="recipe-card">
+                <a id="recipe1link" href="/recipe/68"><img src="./uploads/recipe-68.jpg" alt="recipe-image"><br><p>Savory Breakfast Rolls</p></a>
+            </li>
+            <li id="recipe2" class="recipe-card">
+                <a id="recipe2link" href="/recipe/70"><img src="./uploads/recipe-70.jpg" alt="recipe-image"><br><p>German Farmer's Breakfast</p></a>
+            </li>
+            <li id="recipe3" class="recipe-card">
+                <a id="recipe3link" href="/recipe/71"><img src="./uploads/recipe-71.jpg" alt="recipe-image"><br><p>Peanut Butter and Chocolate Chip Pancakes</p></a>
+            </li>
+            <li id="recipe4" class="recipe-card">
+                <a id="recipe4link" href="/recipe/77"><img src="./uploads/recipe-77.jpg" alt="recipe-image"><br><p>Caprese Pasta</p></a>
+            </li>
+            <li id="recipe5" class="recipe-card">
+                <a id="recipe5link" href="/recipe/78"><img src="./uploads/recipe-78.jpg" alt="recipe-image"><br><p>Meatloaf</p></a>
+            </li>
+            <li id="recipe6" class="recipe-card">
+                <a id="recipe6link" href="/recipe/79"><img src="./uploads/recipe-79.jpg" alt="recipe-image"><br><p>Pizza Lasagna</p></a>
+            </li>
+        </ul>
+    </section>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="./js/header.js"></script>
+  <script src="./js/index.js"></script>
+</html>
