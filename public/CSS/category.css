@@ -120,3 +120,7 @@ hr{
     text-align: center;
     color: #333;
 }
+
+.hidden {
+    display: none;
+}

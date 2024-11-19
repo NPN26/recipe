@@ -80,6 +80,7 @@ hr{
     grid-template-columns: repeat(3, minmax(300px, 1fr));
     gap: 10%;
     padding: 50px 100px;
+    justify-content: center;
 }
 
 .recipe-card {
@@ -103,6 +104,9 @@ hr{
 .recipe-card a{
     text-decoration: none;
     color: black;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .recipe-card img {
@@ -110,6 +114,8 @@ hr{
     height: 200px;
     object-fit: cover;
     border-radius: 10px 10px 0 0;
+    margin: auto;
+    display: block;
 }
 
 .recipe-card h3 {
@@ -122,4 +128,7 @@ hr{
     font-size: 1.75em;
     text-align: center;
     color: #333;
+}
+.hidden {
+    display: none;
 }

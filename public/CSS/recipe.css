@@ -88,11 +88,11 @@ hr{
     max-width: 100%;
     width: 100%;
     position: sticky;  /* Change to sticky */
-    top: 75vh;        /* Center vertically in viewport when sticky */
+    top: 75%;        /* Center vertically in viewport when sticky */
     transform: translateY(-200%);  /* Offset by half its height */
     margin-left: auto;  /* Push to right side initially */
     margin-right: auto;
-    max-height: 18vh;
+    max-height: 12.5%;
     display: flex;
     align-items: center;
     justify-content: center;

@@ -2,7 +2,8 @@
 $(document).ready(function() {
     // hide the rating if user is not logged in
     if (!localStorage.getItem('userId')){
-        $('#rating-system').hide();
+        $('#star-rating').hide();
+        $('#rating-system h3').text('Please login to rate this recipe');
     }
 
     // Handle form submission with AJAX

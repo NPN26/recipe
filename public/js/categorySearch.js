@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
     $("form").submit(function (e) {
         e.preventDefault();
@@ -14,14 +13,24 @@ $(document).ready(function () {
                 console.log("Server response: ", response);
                 if (response.status === "success") {
                     console.log("Recipes: ", response.recipes);
-                    for (let i = 0; i < response.recipes.length; i++) {
-                        const recipe = response.recipes[i];
-                        const recipeElement = $(`#recipe${i + 1}`);
-                        const imagePath = recipe.image ? recipe.image.replace('public/', '') : '';
-                        recipeElement.find("img").attr("src", `/${imagePath}`);
-                        const recipeAEle = $(`#recipe${i + 1}link`);
-                        recipeAEle.html(`<img alt="recipe-image" src="/${imagePath}"><br><p>${recipe.recipe_name}</p>`);
-                        recipeAEle.attr("href", `/recipe/${recipe.recipe_id}`);
+                    if (response.recipes.length === 0) {
+                        console.log(response.recipes.length)
+                        alert("No recipes found, please try again");
+                        window.location.href = "/category/" + category_name;
+                    } else {
+                        $("#no-recipes-message").addClass('hidden');
+                        for (let i = 0; i < 6; i++) {
+                            const recipeElement = $(`#recipe-link${i + 1}`).closest('.recipe-card');
+                            if (i < response.recipes.length) {
+                                const recipe = response.recipes[i];
+                                const imagePath = recipe.image ? recipe.image.replace('public/', '') : '';
+                                $(`#recipe-link${i + 1}`).html(`<img alt="recipe-image" src="/${imagePath}"><br><p>${recipe.recipe_name}</p>`);
+                                $(`#recipe-link${i + 1}`).attr("href", `/recipe/${recipe.recipe_id}`);
+                                recipeElement.removeClass('hidden');
+                            } else {
+                                recipeElement.addClass('hidden');
+                            }
+                        }
                     }
                 } else {
                     alert("Search failed, please try again");
